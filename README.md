@@ -1,15 +1,29 @@
-A Dockerfile to automatically build generatedata.com found at benkeen/generatedata. This docker container simplifies setup of an apache with the code used for generatedata.com. The image is based off of tutum/apache-php. It simply automatically pulls the code from benkeen/generatedata, puts it in the app directory, and then runs composer install. You will need to point to a mysql database during the setup in order to use it.
+# docker-generatedata
 
-Simply pull the image
-> docker pull lai475nathaniel/docker-generatedata
+A Dockerfile to automatically build and use the [generatedata.com](http://www.generatedata.com) random data generator tool. 
 
-then start up the server by running
+The source code is available at [benkeen/generatedata](https://github.com/benkeen/generatedata). 
 
-> docker run --name generatedata -p 80:80 lai475nathaniel/docker-generatedata
+This docker container simplifies the setup of an Apache server and of a MySQL database server. Based on [tutum/apache-php](https://hub.docker.com/r/tutum/apache-php/) and [mysql](https://hub.docker.com/r/library/mysql/). 
 
-The server should then be running on the IP address of the machine running the service on port 80.
+The dockerfile just pulls the code from benkeen/generatedata (release tag 3.2.1), puts it in the "/app" directory, and then runs composer install. You'll need to point to the MySQL database with the right informations during the setup, in order to use the tool (the database name and password can be set in the docker-compose file).
 
-Additionally the fig file in the repository sets up both a php server with generate data and a mysql server with a schema by the name of "app" to be used by generatedata. Simply run 
-> fig up 
+## Requirements
+- docker
+- docker-compose ([For Windows](https://github.com/docker/compose/releases/tag/1.5.0rc3))
 
-and it will spin up both the php server and the mysql database in two different containers. On setup of generatedata, use "mysql" as the hostname of the mysql server, and "app" as the database name.
+
+## How to Install
+
+Clone this repo :
+    
+    $ git clone https://github.com/yhel/docker-generatedata.git
+    
+Cd into the created folder and then build or run :
+    
+    $ cd docker-generatedata
+    $ docker-compose up
+
+The server should then be running on the IP address of the machine running the containers, on port 80. Usually the VM is named "default", so, to find the corresponding IP address :
+
+    $ docker-machine ip default
